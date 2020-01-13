@@ -25,15 +25,15 @@ def gen(camera):
 @app.route('/video_feed')
 def video_feed():
     return Response(gen(VideoCamera()), mimetype='multipart/x-mixed-replace; boundary=frame')
-'''
+
 @app.route('/submit',methods=['POST','GET'])
 def submit():
 	image = request.args.get('image')
-	dosya = open("deneme.txt","w")
-	dosya.write(image)
-	dosya.close
+	#dosya = open("deneme.txt","w")
+	#dosya.write(image)
+	#dosya.close
 	return render_template('index2.html')
-	'''
+
 	
 @app.route('/')
 def index():
