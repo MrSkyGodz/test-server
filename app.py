@@ -16,7 +16,6 @@ app = Flask(__name__)
 socketio = SocketIO(app)
 
 
-
 def gen(camera):
 	while True:
 		frame = camera.get_frame()
@@ -26,12 +25,15 @@ def gen(camera):
 @app.route('/video_feed')
 def video_feed():
     return Response(gen(VideoCamera()), mimetype='multipart/x-mixed-replace; boundary=frame')
-
-@app.route('/submit',methods=['POST'])
+'''
+@app.route('/submit',methods=['POST','GET'])
 def submit():
 	image = request.args.get('image')
-
+	dosya = open("deneme.txt","w")
+	dosya.write(image)
+	dosya.close
 	return render_template('index2.html')
+	'''
 	
 @app.route('/')
 def index():
@@ -39,5 +41,5 @@ def index():
 
 
 if __name__ == '__main__':
-	app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=True)
+	app.run(host="127.0.0.1", port=int(os.environ.get("PORT", 8080)), debug=True)
 	#socketio.run(app,host="0.0.0.0", port=int(os.environ.get("PORT", 5000))
