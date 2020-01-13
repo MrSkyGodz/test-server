@@ -2,7 +2,6 @@ from sys import stdout
 import logging
 from flask_socketio import SocketIO
 from flask import Flask, render_template, Response, stream_with_context, request
-
 from PIL import Image
 from camera import VideoCamera
 from flask_socketio import SocketIO
@@ -40,6 +39,5 @@ def index():
 
 
 if __name__ == '__main__':
-
 	#app.run(host="192.168.1.107", port=int(os.environ.get("PORT", 8080)), debug=True)
-    socketio.run(app,host="0.0.0.0", port=int(os.environ.get("PORT", 5000))
+	socketio.run(app,host="0.0.0.0", port=int(os.environ.get("PORT", 5000))
