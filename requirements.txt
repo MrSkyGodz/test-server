@@ -1,0 +1,4 @@
+bottle~=0.12
+passlib~=1.7
+numpy~=1.18
+flask
