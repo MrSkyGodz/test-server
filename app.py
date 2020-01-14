@@ -31,10 +31,14 @@ def submit():
 	return Response("%s saved" % f)
 
 
-def gen(camera):
+def gen():
 	while True:
-		a = os.listdir('./images')
-		cap = cv2.imread("./images/"+ a[-1])
+		try:
+			a = os.listdir('./images')
+			cap = cv2.imread("./images/"+ a[-1])
+		except:
+			cap = cv2.imread("./static/img/1.jpg")
+
 		img = cap
 
 		gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -59,9 +63,11 @@ def gen(camera):
 		yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
+
+
 @app.route('/video_feed')
 def video_feed():
-    return Response(gen(VideoCamera()), mimetype='multipart/x-mixed-replace; boundary=frame')
+    return Response(gen(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
 @app.route('/')
@@ -72,5 +78,6 @@ def index():
 
 
 if __name__ == '__main__':
-	app.run(host="127.0.0.1", port=int(os.environ.get("PORT", 5000)), debug=True)
+	#app.run(host="192.168.1.107", port=int(os.environ.get("PORT", 8080)), debug=True)
+	app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=True)
 	#socketio.run(app,host="0.0.0.0", port=int(os.environ.get("PORT", 5000))
