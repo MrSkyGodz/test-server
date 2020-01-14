@@ -2,6 +2,7 @@ import cv2
 from time import time
 import numpy as np
 from PIL import Image
+import os
 
 
 class Camera(object):
@@ -19,13 +20,19 @@ class VideoCamera(object):
         # Using OpenCV to capture from device 0. If you have trouble capturing
         # from a webcam, comment the line below out and use a video file
         # instead.
-        self.video = cv2.VideoCapture(0)
+        
+        #self.video = cv2.VideoCapture(0)
+        a = os.listdir('./images')
+        
+        #self.video = Image.open("./images/"+ a[1])
+        self.video = cv2.imread("./images/"+ a[-1])
+
         # If you decide to use video.mp4, you must have this file in the folder
         # as the main.py.
         # self.video = cv2.VideoCapture('./static/video/1.mp4')
 
-    def __del__(self):
-        self.video.release()
+   # def __del__(self):
+        #self.video.release()
 
     def get_frame(self):
         # multiple cascades: https://github.com/Itseez/opencv/tree/master/data/haarcascades
@@ -36,7 +43,9 @@ class VideoCamera(object):
 
 
         cap = self.video
-        ret, img = cap.read()
+        #ret, img = cap.read()
+        img = cap
+
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
         faces = face_cascade.detectMultiScale(gray, 1.3, 5)
@@ -53,11 +62,13 @@ class VideoCamera(object):
 
 
         image = img    
-        success = ret
+        #success = ret
         #success, image = im.read()
+
         # We are using Motion JPEG, but OpenCV defaults to capture raw images,
         # so we must encode it into JPEG in order to correctly display the
         # video stream.
         ret, jpeg = cv2.imencode('.jpg', image)
+
         return jpeg.tobytes()
         #return self.video

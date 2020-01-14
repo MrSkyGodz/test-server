@@ -10,4 +10,5 @@ import cv2
 a = os.listdir('./images')
 #frame = cv2.imread(a[-1]).tobytes()
 img = Image.open("./images/"+ a[-1])
+img.show()
 print(img)

@@ -16,29 +16,46 @@ app = Flask(__name__)
 
 PATH_TO_TEST_IMAGES_DIR = './images'
 
+face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+#https://github.com/Itseez/opencv/blob/master/data/haarcascades/haarcascade_eye.xml
+eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')
+
 
 @app.route('/submit',methods=['POST'])
 def submit():
 
-
 	img = request.files['image']  # get the image
-	f = ('%s.jpeg' % time.strftime("%Y%m%d-%H%M%S"))
+	f = ('%s.jpg' % time.strftime("%Y%m%d-%H%M%S"))
 	img.save('%s/%s' % (PATH_TO_TEST_IMAGES_DIR, f))		
 	
 	return Response("%s saved" % f)
 
-'''
-def gen(camera):
-	while True:
-		frame = camera.get_frame()
-		yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
-'''
+
 def gen(camera):
 	while True:
 		a = os.listdir('./images')
+		cap = cv2.imread("./images/"+ a[-1])
+		img = cap
 
-		frame = Image.open("./images/"+ a[-1]).tobytes()
+		gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+		faces = face_cascade.detectMultiScale(gray, 1.3, 5)
+
+		for (x,y,w,h) in faces:
+			cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
+			roi_gray = gray[y:y+h, x:x+w]
+			roi_color = img[y:y+h, x:x+w]
+			eyes = eye_cascade.detectMultiScale(roi_gray)
+			for (ex,ey,ew,eh) in eyes:
+				cv2.rectangle(roi_color,(ex,ey),(ex+ew,ey+eh),(0,255,0),2)
+
+		image = img
+
+		ret, jpeg = cv2.imencode('.jpg', image)
+
+		frame = jpeg.tobytes()
+
+		#frame = camera.get_frame()
 		yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
@@ -47,18 +64,11 @@ def video_feed():
     return Response(gen(VideoCamera()), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
-'''
-@app.route('/feed')
-def video_feed():
-    return Response(img, mimetype='multipart/x-mixed-replace; boundary=frame')
-'''
-
-
-
 @app.route('/')
 def index():
 
     return render_template('index2.html')
+
 
 
 if __name__ == '__main__':

@@ -14,7 +14,23 @@
 <body>
 <video id="video" autoplay></video>
 
+<button id="snap">Snap Photo</button>
+
 <img src="{{ url_for('video_feed') }}">
+
+<script>
+
+ document.getElementById("snap").addEventListener("click", function()
+{
+        
+    
+}
+
+
+</script>
+
+
+
 
 
 <script>
@@ -22,6 +38,7 @@
 
     let imageCanvas = document.createElement('canvas');
     let imageCtx = imageCanvas.getContext("2d");
+
 
 
     window.onload = function () {
@@ -40,6 +57,9 @@
     v.onclick = function() {
         console.log('click');
         sendImagefromCanvas();
+
+
+
     };
 
         function sendImagefromCanvas() {
