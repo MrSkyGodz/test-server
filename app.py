@@ -78,5 +78,6 @@ def index():
 
 if __name__ == '__main__':
 	#app.run(host="192.168.1.112", port=int(os.environ.get("PORT", 8080)), debug=True)
-	app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=True)
+	#app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=True)
+	app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 17995)), debug=True)
 	#socketio.run(app,host="0.0.0.0", port=int(os.environ.get("PORT", 5000))
