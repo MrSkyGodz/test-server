@@ -43,14 +43,11 @@
     v.onclick = function() {
         console.log('click');
         sendImagefromCanvas();
-
-
-
     };
 
-        function sendImagefromCanvas() {
+    function sendImagefromCanvas() {
 
-        //Make sure the canvas is set to the current video size
+        
         imageCanvas.width = v.videoWidth;
         imageCanvas.height = v.videoHeight;
 
@@ -60,11 +57,12 @@
         imageCanvas.toBlob(postFile, 'image/jpeg');
     }
 
-     function postFile(file) {
+    function postFile(file) {
         let formdata = new FormData();
         formdata.append("image", file);
         let xhr = new XMLHttpRequest();
-        xhr.open('POST', 'http://127.0.0.1:5000/submit', true);
+        xhr.open('POST', 'http://0.0.0.0:5000/submit', true);
+        //xhr.open('POST', 'http://192.168.1.112:8080/submit', true);
         xhr.onload = function () {
             if (this.status === 200)
                 console.log(this.response);
