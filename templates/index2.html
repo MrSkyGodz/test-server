@@ -21,6 +21,8 @@
 
 <script>
     var v = document.getElementById('video');
+    var s = document.getElementById('snap');
+
 
     let imageCanvas = document.createElement('canvas');
     let imageCtx = imageCanvas.getContext("2d");
@@ -45,6 +47,12 @@
         sendImagefromCanvas();
     };
 
+    s.onclick = function() {
+        console.log('click');
+        sendImagefromCanvas();
+    };
+
+
     function sendImagefromCanvas() {
 
         
@@ -61,8 +69,8 @@
         let formdata = new FormData();
         formdata.append("image", file);
         let xhr = new XMLHttpRequest();
-        xhr.open('POST', 'http://127.0.0.1:5000/submit', true);
-        //xhr.open('POST', 'http://192.168.1.112:8080/submit', true);
+        //xhr.open('POST', 'http://0.0.0.0:5000/submit', true);
+        xhr.open('POST', 'http://0.0.0.0:5000/submit', true);
         xhr.onload = function () {
             if (this.status === 200)
                 console.log(this.response);
