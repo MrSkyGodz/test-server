@@ -70,7 +70,9 @@
         formdata.append("image", file);
         let xhr = new XMLHttpRequest();
         //xhr.open('POST', 'http://127.0.0.1:5000/submit', true);
-        xhr.open('POST', 'https://0.0.0.0:5000/submit', true);
+        xhr.open('POST', 'http://192.168.1.112:8080/submit', true);
+        //xhr.open('POST', 'http://0.0.0.0:5000/submit', true);
+        console.log("asdasdsaddsadas");
         xhr.onload = function () {
             if (this.status === 200)
                 console.log(this.response);

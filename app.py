@@ -22,7 +22,6 @@ eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')
 
 @app.route('/submit',methods=['POST'])
 def submit():
-
 	img = request.files['image']  # get the image
 	f = ('%s.jpg' % time.strftime("%Y%m%d-%H%M%S"))
 	img.save('%s/%s' % (PATH_TO_TEST_IMAGES_DIR, f))		
@@ -77,7 +76,7 @@ def index():
 
 
 if __name__ == '__main__':
-	#app.run(host="192.168.1.112", port=int(os.environ.get("PORT", 8080)), debug=True)
+	app.run(host="192.168.1.112", port=int(os.environ.get("PORT", 8080)), debug=True)
 	#app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=True)
-	app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=True)
+	#app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=True)
 	#socketio.run(app,host="0.0.0.0", port=int(os.environ.get("PORT", 5000))
