@@ -12,9 +12,11 @@
 }
 </style>
 <body>
-<video id="video" autoplay></video>
+    <video id="video" autoplay="true">
+        No Video support in your browser... 
+    </video>
 
-<button id="snap">Snap Photo</button>
+    <button id="snap">Snap Photo</button>
 
 <img src="{{ url_for('video_feed') }}">
 
@@ -28,12 +30,21 @@
     let imageCtx = imageCanvas.getContext("2d");
 
 
+    
+
+
+
+
+
+
+
+
 
     window.onload = function () {
 
         //Get camera video
         navigator.mediaDevices.getUserMedia({video: {width: 1280, height: 720}, audio: false})
-            .then(stream => {
+           .then(stream => {
                 v.srcObject = stream;
             })
             .catch(err => {
@@ -69,8 +80,8 @@
         let formdata = new FormData();
         formdata.append("image", file);
         let xhr = new XMLHttpRequest();
-        //xhr.open('POST', 'http://127.0.0.1:5000/submit', true);
-        xhr.open('POST', 'http://192.168.1.112:8080/submit', true);
+        xhr.open('POST', 'http://127.0.0.1:5000/submit', true);
+        //xhr.open('POST', 'http://192.168.1.112:8080/submit', true);
         //xhr.open('POST', 'http://0.0.0.0:5000/submit', true);
         console.log("asdasdsaddsadas");
         xhr.onload = function () {
